@@ -1,3 +1,4 @@
+// modules/dashboard/ui/components/Dashboard-navbar.tsx
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -16,7 +17,8 @@ export default function DashboardNavbar() {
         e.preventDefault();
         setCommand((prev) => !prev);
       }
-    }
+    };
+    
     document.addEventListener("keydown", down);
     return () => {
       document.removeEventListener("keydown", down);
