@@ -1,5 +1,6 @@
 import { botttsNeutral, initials } from "@dicebear/collection";
 import { createAvatar } from "@dicebear/core";
+import { useMemo } from "react";
 
 import { cn } from "@/lib/utils";
 import { AvatarImage, Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -15,20 +16,29 @@ export const GeneratedAvatar = ({
   className,
   variant = "botttsNeutral",
 }: GeneratedAvatarProps) => {
-  let avatar;
+  const avatar = useMemo(() => {
+    if (variant === "botttsNeutral") {
+      return createAvatar(botttsNeutral, { seed });
+    } else if (variant === "initials") {
+      return createAvatar(initials, { 
+        seed, 
+        fontWeight: 500, 
+        fontSize: 32 
+      });
+    } else {
+      throw new Error(`Invalid variant: ${variant}`);
+    }
+  }, [seed, variant]);
 
-  if (variant === "botttsNeutral") {
-    avatar = createAvatar(botttsNeutral, { seed });
-  } else if (variant === "initials") {
-    avatar = createAvatar(initials, { seed, fontWeight: 500, fontSize: 32 });
-  } else {
-    throw new Error("Invalid variant");
-  }
+  const fallbackText = seed ? seed.charAt(0).toUpperCase() : "?";
 
   return (
     <Avatar className={cn("h-10 w-10", className)}>
-      <AvatarImage src={avatar.toDataUri()} alt="Generated Avatar" />
-      <AvatarFallback>{seed.charAt(0).toUpperCase()}</AvatarFallback>
+      <AvatarImage 
+        src={avatar.toDataUri()} 
+        alt={`Generated avatar for ${seed}`} 
+      />
+      <AvatarFallback>{fallbackText}</AvatarFallback>
     </Avatar>
   );
 };
