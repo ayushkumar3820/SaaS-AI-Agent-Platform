@@ -1,13 +1,16 @@
+"use client";
+
 import { ErrorState } from "@/components/erro-state";
 import { EmptyState } from "@/components/error-empty";
 import { LoadingState } from "@/components/loading-state";
-import { DataTable } from "@/modules/Agents/ui/component/data-table";
+
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { columns } from "../component/columns"; // ✅ make sure columns.tsx is present in the same folder
 import { useRouter } from "next/navigation";
 import { useMeetingsFilter } from "../../hooks/use-Meetings-filter";
 import { DataPagination } from "../component/data_pagination";
+import { DataTable } from "@/modules/agents/ui/component/data-table";
 
 export const MeetingView = () => {
   const trpc = useTRPC();

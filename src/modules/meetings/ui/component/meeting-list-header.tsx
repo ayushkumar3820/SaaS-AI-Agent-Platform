@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { PlusIcon, XCircleIcon } from "lucide-react";
 
@@ -5,11 +7,12 @@ import { useState } from "react";
 
 import { NewMeetingDialog } from "./NewMeetingDigalogs";
 import { StatusFilter } from "./status-filter";
-import { MeetingSearchFilter } from "./Meeting_search_filter";
+
 import { AgentIdFilter } from "./agent-id-filter";
 import { useMeetingsFilter } from "../../hooks/use-Meetings-filter";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { DEFAULT_PAGE } from "@/constant";
+import { MeetingSearchFilter } from "./meeting_search_filter";
 
 export const MeetingListHeader = () => {
   const [filter, setFilter] = useMeetingsFilter();
@@ -41,7 +44,7 @@ export const MeetingListHeader = () => {
         <ScrollArea>
         
         <div className="flex flex-wrap items-center gap-3">
-          <MeetingSearchFilter />
+          <MeetingSearchFilter/>
           <StatusFilter />
           <AgentIdFilter />
           {isAnyFilterModified && (

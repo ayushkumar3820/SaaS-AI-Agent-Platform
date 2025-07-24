@@ -1,3 +1,5 @@
+"use client";
+
 import { ResponsiveDialog } from "@/components/responsive_dialog";
 import { MeetingForm } from "./meeting_form";
 import { useRouter } from "next/navigation";

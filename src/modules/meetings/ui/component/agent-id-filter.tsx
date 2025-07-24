@@ -1,3 +1,4 @@
+"use client";
 import { useTRPC } from "@/trpc/client";
 import { useMeetingsFilter } from "../../hooks/use-Meetings-filter";
 import { useState } from "react";
