@@ -1,3 +1,6 @@
+"use client";
+
+
 import { ReactNode, useState } from "react";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";

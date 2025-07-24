@@ -1,3 +1,5 @@
+"use client";
+
 import { GeneratedAvatar } from "@/components/generated-avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,7 +20,8 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-import { TRPCError } from "@trpc/server";
+// Fixed import - use TRPCClientError instead of TRPCError
+import { TRPCClientError } from "@trpc/client";
 import { agentInsertSchema } from "../../schema";
 import { AgentGetOne } from "../../types";
 
@@ -52,10 +55,11 @@ export const AgentForm = ({
         onSuccess?.();
       },
 
-      onError: (error: TRPCError | Error) => {
-        const errorMessage = error instanceof TRPCError 
+      // Fixed error type
+      onError: (error) => {
+        const errorMessage = error instanceof TRPCClientError 
           ? error.message 
-          : error.message || "Failed to create agent";
+          : "Failed to create agent";
         toast.error(errorMessage);
         onError?.();
       },
@@ -77,10 +81,11 @@ export const AgentForm = ({
         onSuccess?.();
       },
 
-      onError: (error: TRPCError | Error) => {
-        const errorMessage = error instanceof TRPCError 
+      // Fixed error type
+      onError: (error) => {
+        const errorMessage = error instanceof TRPCClientError 
           ? error.message 
-          : error.message || "Failed to update agent";
+          : "Failed to update agent";
         toast.error(errorMessage);
         onError?.();
       },
