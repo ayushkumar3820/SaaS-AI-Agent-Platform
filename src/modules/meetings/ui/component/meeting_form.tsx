@@ -21,7 +21,8 @@ import { MeetingGetOne } from "../../types";
 import { useState } from "react";
 import { CommandSelect } from "@/components/command-select";
 import { GeneratedAvatar } from "@/components/generated-avatar";
-import { NewAgentDialog } from "@/modules/Agents/ui/component/newAgentDigalogs";
+import { NewAgentDialog } from "@/modules/agents/ui/component/newAgentDigalogs";
+
 
 interface MeetingFormProps {
   onSuccess?: (id?: string) => void;

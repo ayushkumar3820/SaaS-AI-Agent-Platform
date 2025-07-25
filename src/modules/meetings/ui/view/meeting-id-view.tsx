@@ -10,12 +10,13 @@ import {
 } from "@tanstack/react-query";
 import { MeetingIdViewHeader } from "../component/meeting_view-id_header";
 import { useRouter } from "next/navigation";
-import { useConfirm } from "@/hooks/use-confirm";
+
 import { UpdateMeetingDialog } from "../component/updateMeetingDigalogs copy";
 import { useState } from "react";
 import { UpcomingState } from "../component/upcomin-state";
 import { ActiveState } from "../component/active-state ";
 import { ProcessState } from "../component/processing-State";
+import { useConfirm } from "@/modules/agents/hooks/userConfirm";
 
 interface Props {
   meetingId: string;

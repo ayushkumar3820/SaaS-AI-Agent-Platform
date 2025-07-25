@@ -6,7 +6,7 @@ import { LoadingState } from "@/components/loading-state";
 
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { columns } from "../component/columns"; // ✅ make sure columns.tsx is present in the same folder
+import { columns } from "../component/columns"; 
 import { useRouter } from "next/navigation";
 import { useMeetingsFilter } from "../../hooks/use-Meetings-filter";
 import { DataPagination } from "../component/data_pagination";

@@ -1,11 +1,9 @@
-// app/(dashboards)/layout.tsx
 "use client";
 
 import { Suspense } from "react";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import DashboardSidebar from "@/modules/dashboard/ui/componenets/dashboard_sidebar";
 import DashboardNavbar from "@/modules/dashboard/ui/componenets/Dashboard-navbar";
-
 
 interface Props {
   children: React.ReactNode;
@@ -25,15 +23,14 @@ export default function DashboardLayout({ children }: Props) {
     <SidebarProvider>
       <div className="flex min-h-screen w-full">
         <Suspense fallback={<LoadingFallback text="Loading sidebar..." />}>
-          <DashboardSidebar
-           />
+          <DashboardSidebar />
         </Suspense>
-        
+
         <main className="flex-1 flex flex-col">
           <Suspense fallback={<LoadingFallback text="Loading navbar..." />}>
             <DashboardNavbar />
           </Suspense>
-          
+
           <div className="flex-1 bg-muted/40 p-6">
             <Suspense fallback={<LoadingFallback text="Loading content..." />}>
               {children}
