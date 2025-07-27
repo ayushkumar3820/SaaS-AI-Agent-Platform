@@ -1,5 +1,11 @@
+import { db } from '@/db';
+import { agents, meeting } from '@/db/schema';
 import { auth } from '@/lib/auth';
+import { polarClient } from '@/lib/polar';
+import { MAX_FREE_AGENT, MAX_FREE_MEETING } from '@/modules/premuin/constant';
+
 import { initTRPC, TRPCError } from '@trpc/server';
+import { count, eq } from 'drizzle-orm';
 import { headers } from 'next/headers';
 import { cache } from 'react';
 
@@ -42,7 +48,50 @@ export const protectedProcedure = baseProcedure.use(async ({ ctx, next }) => {
   return next({
     ctx: {
       ...ctx,
-      auth: session, // Pass the session to the context
+      auth: session,
     }
   });
 });
+
+export const premiumProcedure = (entity: "meeting" | "agents") => {
+  return protectedProcedure.use(async ({ ctx, next }) => {
+    const customer = await polarClient.customers.getExternal({
+      externalId: ctx.auth.user.id
+    });
+    
+    const [userMeetings] = await db.select({
+      count: count(meeting.id),
+    }).from(meeting).where(eq(meeting.userId, ctx.auth.user.id));
+
+    const [userAgents] = await db.select({
+      count: count(agents.id),
+    }).from(agents).where(eq(agents.userId, ctx.auth.user.id));
+
+    const isPremium = customer.activeSubscriptions?.length > 0;
+    const isFreeAgentLimitReached = userAgents.count >= MAX_FREE_AGENT;
+    const isFreeMeetingLimitReached = userMeetings.count >= MAX_FREE_MEETING;
+    const shouldThrowMeetingError = entity === "meeting" && isFreeMeetingLimitReached && !isPremium;
+    const shouldThrowAgentsError = entity === "agents" && isFreeAgentLimitReached && !isPremium;
+
+    if (shouldThrowMeetingError) {
+      throw new TRPCError({
+        code: "FORBIDDEN",
+        message: "You have reached the free meeting limit. Upgrade to premium to create more meetings."
+      });
+    }
+    
+    if (shouldThrowAgentsError) {
+      throw new TRPCError({
+        code: "FORBIDDEN",
+        message: "You have reached the free agent limit. Upgrade to premium to create more agents."
+      });
+    }
+
+    return next({ 
+      ctx: { 
+        ...ctx, 
+        customer 
+      } 
+    });
+  });
+};

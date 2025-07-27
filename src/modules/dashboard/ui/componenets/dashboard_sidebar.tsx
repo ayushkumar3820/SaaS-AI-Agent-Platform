@@ -17,6 +17,7 @@ import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import DashboardUserButton from "./dashboardUserbutton";
+import { DashboardTrial } from "./dashboard-trail";
 
 const firstSection = [
   {
@@ -109,6 +110,7 @@ export default function DashboardSidebar() {
       </SidebarContent>
 
       <SidebarFooter className="px-2 py-2">
+        <DashboardTrial/>
         <DashboardUserButton/>
       </SidebarFooter>
     </Sidebar>
