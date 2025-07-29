@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { useTRPC } from "@/trpc/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
@@ -35,7 +35,7 @@ export const MeetingForm = ({
   onError,
   initialValues,
 }: MeetingFormProps) => {
-  const router = useRouter();
+  // const router = useRouter();
   const trpc = useTRPC();
   const queryClient = useQueryClient();
   const [newOpenDialog, setNewOpenDialog] = useState(false);

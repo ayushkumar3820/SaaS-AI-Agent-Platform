@@ -1,10 +1,10 @@
-// lib/auth.ts
+
 
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "../db";
 import { user, session, account, verification } from "../db/schema";
-import { polar, checkout, portal, usage, webhooks } from "@polar-sh/better-auth";
+import { polar, checkout, portal } from "@polar-sh/better-auth";
 import { polarClient } from "./polar";
 
 export const auth = betterAuth({

@@ -68,7 +68,7 @@ function CommandResponserDialog({
   description = "Search for a command to run...",
   children,
   className,
-   shouldfilter=true,
+  //  shouldfilter=true,
   showCloseButton = true,
   ...props
 
@@ -77,7 +77,7 @@ function CommandResponserDialog({
   description?: string
   className?: string
   showCloseButton?: boolean
-    shouldfilter?:true
+    // shouldfilter?:true
 }) {
   const isMobile=useIsMobile();
   if(isMobile){

@@ -29,11 +29,31 @@ import { MeetingStatus } from "../types";
 
 import { generateAvatarUri } from "@/lib/avatar";
 import { streamVideo } from "@/lib/stearm-vidoe";
-import { Input } from "@/components/ui/input";
 import { streamChat } from "@/lib/stream-chat";
 
-// Helper function to get user ID from context
-function getUserId(ctx: any): string {
+// Define proper interface for context
+interface AuthContext {
+  auth: {
+    session: {
+      id: string;
+      userId: string;
+      expiresAt: Date;
+      createdAt: Date;
+      updatedAt: Date;
+      token: string;
+      ipAddress?: string | null;
+      userAgent?: string | null;
+    };
+    user: {
+      id: string;
+      name?: string | null;
+      image?: string | null;
+    };
+  };
+}
+
+// Helper function to get user ID from context - Fixed typing
+function getUserId(ctx: AuthContext): string {
   const userId = ctx?.auth?.user?.id;
 
   if (!userId) throw new TRPCError({ code: "UNAUTHORIZED" });
@@ -42,7 +62,7 @@ function getUserId(ctx: any): string {
 
 export const MeetingRouter = createTRPCRouter({
   generateChatToken: protectedProcedure.mutation(async ({ ctx }) => {
-    const token = streamChat.createToken(ctx.auth.user.id);
+    // const token = streamChat.createToken(ctx.auth.user.id);
     await streamChat.upsertUser({
       id: ctx.auth.user.id,
       role: "admin",
@@ -88,7 +108,7 @@ export const MeetingRouter = createTRPCRouter({
         .filter(Boolean);
 
       const speakerIds = [
-        ...new Set(transcript.map((item) => item.speaker_id)),
+        ...new Set(transcript.map((item: { speaker_id: string }) => item.speaker_id)),
       ];
 
       const userSpeakers = await db
@@ -119,7 +139,7 @@ export const MeetingRouter = createTRPCRouter({
 
       const speakers = [...userSpeakers, ...agentSpeakers];
 
-      const transcriptWithSpeakers = transcript.map((item) => {
+      const transcriptWithSpeakers = transcript.map((item: { speaker_id: string; [key: string]: unknown }) => {
         const speaker = speakers.find(
           (speaker) => speaker.id === item.speaker_id
         );

@@ -11,12 +11,13 @@ import {
 import { MeetingIdViewHeader } from "../component/meeting_view-id_header";
 import { useRouter } from "next/navigation";
 
-import { UpdateMeetingDialog } from "../component/updateMeetingDigalogs copy";
+
 import { useState } from "react";
 import { UpcomingState } from "../component/upcomin-state";
 import { ActiveState } from "../component/active-state ";
 import { ProcessState } from "../component/processing-State";
 import { useConfirm } from "@/modules/agents/hooks/userConfirm";
+import { UpdateMeetingDialog } from "../component/updateMeetingDigalogs copy";
 
 interface Props {
   meetingId: string;
@@ -32,7 +33,7 @@ export const MeetingIDView = ({ meetingId }: Props) => {
     trpc.meeting.getOne.queryOptions({ id: meetingId })
   );
 
-  const [_, confirmRemove] = useConfirm(
+  const [ confirmRemove] = useConfirm(
     "Are you sure?",
     "The following action will remove this meeting"
   );
@@ -56,7 +57,7 @@ export const MeetingIDView = ({ meetingId }: Props) => {
     await removeMeeting.mutateAsync({ id: meetingId });
   };
 
-  const isUpcoming = data.status === "upcoming";
+  // const isUpcoming = data.status === "upcoming";
   const isActive = data.status === "active";
   const isCompleted = data.status === "completed";
   const isProcessing = data.status === "processing";

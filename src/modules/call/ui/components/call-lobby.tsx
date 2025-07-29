@@ -6,7 +6,6 @@ import {
   ToggleAudioPreviewButton,
   ToggleVideoPreviewButton,
   useCallStateHooks,
-  useMicrophoneState,
   VideoPreview,
 } from "@stream-io/video-react-sdk";
 import { LogInIcon } from "lucide-react";
@@ -45,9 +44,13 @@ const AllowBrowserPermission = () => {
 };
 
 export const CallLobby = ({ onJoin }: Props) => {
-  const { useCameraState } = useCallStateHooks();
-  const { hasCameraPermission } = useCameraState();
-  const { hasMicrophonePermission } = useMicrophoneState();
+  const { useCameraState, useMicrophoneState } = useCallStateHooks();
+  const cameraState = useCameraState();
+  const microphoneState = useMicrophoneState();
+
+  // ✅ Fixed: Check device status instead of permission properties
+  const hasCameraPermission = cameraState.status === 'enabled' || cameraState.status === 'disabled';
+  const hasMicrophonePermission = microphoneState.status === 'enabled' || microphoneState.status === 'disabled';
 
   const hasBrowserMediaPermission =
     hasCameraPermission && hasMicrophonePermission;

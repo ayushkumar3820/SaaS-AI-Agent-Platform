@@ -13,7 +13,7 @@ interface Props {
   params: Promise<{ agentId: string }>;
 }
 
-export const Page = async ({ params }: Props) => {
+const Page = async ({ params }: Props) => {
   const { agentId } = await params;
 
   const queryClient = getQueryClient();
@@ -32,3 +32,5 @@ export const Page = async ({ params }: Props) => {
     </>
   );
 };
+
+export default Page;

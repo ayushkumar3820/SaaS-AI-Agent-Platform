@@ -2,14 +2,12 @@
 
 import { ErrorState } from "@/components/erro-state";
 
+// interface ErrorProps {
+//   error: Error & { digest?: string };
+//   reset: () => void;
+// }
 
-
-interface ErrorProps {
-  error: Error & { digest?: string };
-  reset: () => void;
-}
-
-export default function AgentViewError({ error, reset }: ErrorProps) {
+export default function AgentViewError() {
   return (
     <>
       <ErrorState

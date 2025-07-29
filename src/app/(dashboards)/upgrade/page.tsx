@@ -1,6 +1,6 @@
 import { auth } from "@/lib/auth";
 import { UpgradeView, UpgradeViewError, UpgradeViewLoading } from "@/modules/premuin/ui/views/UpgradeView";
-import { useTRPC } from "@/trpc/client";
+// import { useTRPC } from "@/trpc/client";
 import { getQueryClient, trpc } from "@/trpc/server";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { headers } from "next/headers";

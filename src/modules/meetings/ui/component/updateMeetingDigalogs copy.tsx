@@ -1,7 +1,7 @@
 import { ResponsiveDialog } from "@/components/responsive_dialog";
 import { MeetingForm } from "./meeting_form";
 import { useRouter } from "next/navigation";
-import { Value } from "@radix-ui/react-select";
+
 import { MeetingGetOne } from "../../types";
 // import { AgentForm } from "./agent_form";
 
@@ -11,7 +11,7 @@ interface Props {
   initialValue:MeetingGetOne;
 }
 
-export const UpdateMeetingDialog = ({ open, onOpenChange,initialValue }: Props) => {
+export const UpdateMeetingDialog = ({ open, onOpenChange }: Props) => {
   const router = useRouter();
 
   return (

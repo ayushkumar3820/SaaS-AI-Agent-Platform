@@ -1,17 +1,34 @@
 "use client";
 
-
 import { LoadingState } from "@/components/loading-state";
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { DataTable } from "../component/data-table";
 import { columns } from "../component/columns";
-
 import { useRouter } from "next/navigation";
 import { useAgentsFilter } from "../../hooks/use-Agents-filter";
 import { EmptyState } from "@/components/error-empty";
 import { DataPagination } from "../component/data_pagination";
 import { ErrorState } from "@/components/erro-state";
+
+// Type definitions
+interface Agent {
+  id: string;
+  name?: string;
+  description?: string;
+  instructions?: string;
+  isActive?: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
+  userId?: string;
+}
+
+interface AgentsResponse {
+  items: Agent[];
+  totalPages: number;
+  currentPage?: number;
+  totalItems?: number;
+}
 
 export const AgentView = () => {
   const [filter, setFilter] = useAgentsFilter();
@@ -23,11 +40,11 @@ export const AgentView = () => {
       ...filter,
       page: Number(filter.page),
     })
-  ) as { data: { items: any[]; totalPages: number } };
+  ) as { data: AgentsResponse };
 
   const hasNoAgents = data.items.length === 0;
 
-  const handleRowClick = (row: any) => {
+  const handleRowClick = (row: Agent) => {
     router.push(`/agents/${row.id}`);
   };
 
@@ -50,7 +67,7 @@ export const AgentView = () => {
     <div className="flex-1 pb-4 px-4 md:px-8 flex flex-col gap-y-4">
       <DataTable 
         data={data.items} 
-        columns={columns} 
+      columns={columns} 
         onRowClick={handleRowClick} 
       />
 

@@ -1,18 +1,16 @@
 import { auth } from "@/lib/auth";
 import { CallView } from "@/modules/call/ui/views/call-views";
-
 import { getQueryClient, trpc } from "@/trpc/server";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
+// Use the exact same pattern as your agents page
 interface Props {
-  params: Promise<{
-    meetingId: string;
-  }>;
+  params: Promise<{ meetingId: string }>;
 }
 
-const Page = async ({ params }: Props) => {
+export default async function Page({ params }: Props) {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
@@ -31,10 +29,8 @@ const Page = async ({ params }: Props) => {
   return (
     <>
       <HydrationBoundary state={dehydrate(queryClient)}>
-        <CallView meetingId={"meetingId"} />
+        <CallView meetingId={meetingId} />
       </HydrationBoundary>
     </>
   );
-};
-
-export default Page;
+}
